@@ -4,16 +4,12 @@ import pickle
 from collections import UserDict
 from functools import wraps
 
-class Field(ABC):
+class Field():
     def __init__(self, value):
         self.value = value
 
     def __str__(self):
         return str(self.value)
-
-    @abstractmethod
-    def value(self, value):
-        self.value=self.value
 
 class Name(Field):
     def __init__(self,value):
@@ -22,18 +18,13 @@ class Name(Field):
         else:
             raise ValueError ("Name cannot be empty")
 
-    def value(self, value):
-        return self.value
-		
+    
 class Phone(Field):
     def __init__(self, value:str) -> None :
         if len(value)==10 and value.isdigit():
             super().__init__(value)
         else:
             raise ValueError("Phone number must be 10 digits like:0671234567")
-
-    def value(self, value):
-        return super().value(value)
 
 class Birthday(Field):
     def __init__(self, value: str):
@@ -49,10 +40,7 @@ class Birthday(Field):
             return True
         except ValueError:
             raise ValueError("Invalid date format. Use DD.MM.YYYY")
-
-    def value(self, value):
-        return super().value(value)
-
+    
 class Record:
     def __init__(self, name):
         self.name = Name(name)
@@ -256,7 +244,7 @@ def show_birthday(args, book):
         return f"Contact {name} not found"
 
 def birthdays(args, book):
-    return book.get_upcoming_birthdays()
+    return book.get_upcoming_birthdays() if book.get_upcoming_birthdays() != [] else "No upcoming birthdays"
 
 HANDLERS = {
     'add' : add_contact,
