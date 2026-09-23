@@ -284,11 +284,7 @@ def main():
                 save_data(book)
                 print("Goodbye!")
                 break
-                           
             print (HANDLERS.get(command)(args, book))
-
-        
-
         else:
             print(f"Invalid command.try {ui.display_cmds()}")
         
